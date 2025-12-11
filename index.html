@@ -7,14 +7,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="header">
-        <h1>
-            <span>🪙</span>
-            Crypto Market Analytics
-        </h1>
+        <h1><span>🪙</span> Crypto Market Analytics</h1>
         <div class="info">
-            <div class="date" id="currentDate"></div>
+            <div id="currentDate" class="date"></div>
             <div class="live-indicator">
                 <div class="live-dot"></div>
                 <span>Live Data</span>
@@ -24,6 +22,8 @@
 
     <div class="container">
         <div class="filter-bar">
+
+            <!-- Currency Filter -->
             <div>
                 <label for="currencyFilter">Currency:</label>
                 <select id="currencyFilter" onchange="updateDashboard()">
@@ -35,6 +35,8 @@
                     <option value="myr">MYR (RM)</option>
                 </select>
             </div>
+
+            <!-- Category Filter -->
             <div>
                 <label for="categoryFilter">Category:</label>
                 <select id="categoryFilter" onchange="updateDashboard()">
@@ -44,6 +46,7 @@
                     <option value="gaming">Gaming</option>
                 </select>
             </div>
+
             <button onclick="updateDashboard()">🔄 Refresh Data</button>
         </div>
 
@@ -52,31 +55,26 @@
         <div class="stats-grid">
             <div class="stat-card btc">
                 <h3>Bitcoin (BTC)</h3>
-                <div class="value" id="btcPrice">Loading...</div>
-                <div class="change" id="btcChange">
-                    <span>-</span>
-                </div>
+                <div id="btcPrice" class="value">Loading...</div>
+                <div id="btcChange" class="change"><span>-</span></div>
             </div>
+
             <div class="stat-card eth">
                 <h3>Ethereum (ETH)</h3>
-                <div class="value" id="ethPrice">Loading...</div>
-                <div class="change" id="ethChange">
-                    <span>-</span>
-                </div>
+                <div id="ethPrice" class="value">Loading...</div>
+                <div id="ethChange" class="change"><span>-</span></div>
             </div>
+
             <div class="stat-card market">
                 <h3>Total Market Cap</h3>
-                <div class="value" id="marketCap">Loading...</div>
-                <div class="change" id="marketChange">
-                    <span>-</span>
-                </div>
+                <div id="marketCap" class="value">Loading...</div>
+                <div id="marketChange" class="change"><span>-</span></div>
             </div>
+
             <div class="stat-card dominance">
                 <h3>BTC Dominance</h3>
-                <div class="value" id="btcDominance">Loading...</div>
-                <div class="change positive">
-                    <span>Market Share</span>
-                </div>
+                <div id="btcDominance" class="value">Loading...</div>
+                <div class="change positive"><span>Market Share</span></div>
             </div>
         </div>
 
@@ -85,6 +83,7 @@
                 <h2>Top 7 Cryptocurrencies by Market Cap</h2>
                 <canvas id="marketCapChart"></canvas>
             </div>
+
             <div class="chart-card">
                 <h2>24h Volume Distribution</h2>
                 <canvas id="volumeChart"></canvas>
@@ -94,7 +93,7 @@
         <div class="table-card">
             <h2>Top 10 Cryptocurrencies</h2>
             <div id="loadingTable" class="loading">Loading market data...</div>
-            <table id="cryptoTable" style="display: none;">
+            <table id="cryptoTable" style="display:none;">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -105,12 +104,11 @@
                         <th>Volume (24h)</th>
                     </tr>
                 </thead>
-                <tbody id="cryptoTableBody">
-                </tbody>
+                <tbody id="cryptoTableBody"></tbody>
             </table>
         </div>
     </div>
 
-    <script src ="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

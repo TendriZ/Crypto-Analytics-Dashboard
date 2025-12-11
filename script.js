@@ -6,27 +6,30 @@ const currencySymbols = {
     eur: '€',
     gbp: '£',
     jpy: '¥',
-    idr: 'Rp ',
-    myr: 'RM '
+    idr: 'Rp',
+    myr: 'RM'
 };
 
 function formatNumber(num, currency = 'usd') {
-    if (num >= 1e12) return currencySymbols[currency] + (num / 1e12).toFixed(2) + 'T';
-    if (num >= 1e9) return currencySymbols[currency] + (num / 1e9).toFixed(2) + 'B';
-    if (num >= 1e6) return currencySymbols[currency] + (num / 1e6).toFixed(2) + 'M';
-    if (num >= 1e3) return currencySymbols[currency] + (num / 1e3).toFixed(2) + 'K';
-    return currencySymbols[currency] + num.toLocaleString();
+    const symbol = currencySymbols[currency];
+
+    if (num >= 1e12) return symbol + (num / 1e12).toFixed(2) + 'T';
+    if (num >= 1e9) return symbol + (num / 1e9).toFixed(2) + 'B';
+    if (num >= 1e6) return symbol + (num / 1e6).toFixed(2) + 'M';
+    if (num >= 1e3) return symbol + (num / 1e3).toFixed(2) + 'K';
+
+    return symbol + num.toFixed(2);
 }
 
 function formatPrice(price, currency = 'usd') {
     const symbol = currencySymbols[currency];
 
     if (currency === 'idr' || currency === 'myr') {
-        return symbol + price.toLocaleString('id-ID', { maximumFractionDigits: 2 });
+        return symbol + price.toLocaleString('en-US', { minimumFractionDigits: 0 });
     }
 
     if (price >= 1000) {
-        return symbol + price.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+        return symbol + price.toLocaleString('en-US', { minimumFractionDigits: 0 });
     } else if (price >= 1) {
         return symbol + price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     } else {
@@ -59,7 +62,7 @@ async function updateDashboard() {
             fetchGlobalData(),
             fetchTopCoins()
         ]);
-        
+
     } catch (error) {
         console.error('Error updating dashboard:', error);
         document.getElementById('errorMessage').innerHTML = 
@@ -176,24 +179,17 @@ function updateCharts(coins) {
         options: {
             responsive: true,
             maintainAspectRatio: true,
-            plugins: {
-                legend: { display: false }
-            },
+            plugins: { legend: { display: false } },
             scales: {
                 y: {
                     beginAtZero: true,
-                    ticks: {
-                        callback: function(value) {
-                            return formatNumber(value, currentCurrency);
-                        },
-                        color: '#9ca3af'
+                    ticks: { 
+                        callback: value => formatNumber(value, currentCurrency),
+                        color: '#9ca3af' 
                     },
                     grid: { color: '#374151' }
                 },
-                x: {
-                    ticks: { color: '#9ca3af' },
-                    grid: { color: '#374151' }
-                }
+                x: { ticks: { color: '#9ca3af' }, grid: { color: '#374151' } }
             }
         }
     });
@@ -216,7 +212,7 @@ function updateCharts(coins) {
             responsive: true,
             maintainAspectRatio: true,
             plugins: {
-                legend: {
+                legend: { 
                     position: 'bottom',
                     labels: { color: '#9ca3af' }
                 }
